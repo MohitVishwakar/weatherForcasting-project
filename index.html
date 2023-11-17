@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
+    <title>Document</title>
+</head>
+<body>
+     <div class="card">
+        <div class="search">
+            <input type="text" placeholder="Search..." spellcheck="false"/>
+            <button><img src="./se.png" alt="">
+            </button>
+        </div>
+        <div class="weather">
+            <img src="./drizzle.png" class="weather-icon">
+            <h1 class="temp">22°C</h1>
+             <h2 class="city">Indore</h2>
+        </div>
+    <div class="details">
+             <div class="col">
+              <img src="./download-removebg-preview.png" class="drop">
+               <h1 class="humidity">50%</h1>
+               <p>huminity</p>
+             </div>       
+            <div class="col">
+              <img src="./wind-image-removebg-preview.png" class="drop">
+              <h1 class="wind ">15 km/h</h1>
+               <p>Wind Speed</p>
+             </div>
+            
+        </div>
+       <script>const apikey = "2c399b94623042425b5447124bdceb05";
+const apiurl = "https://api.openweathermap.org/data/2.5/weather?&units=metric&q=";
+
+const searchBox = document.querySelector(".search input");
+const searchBtn = document.querySelector(".search button");
+
+async function checkweather(city) {
+  const response = await fetch(apiurl + city + `&appid=${apikey}`);
+  let data = await response.json();
+  console.log(data);
+
+  document.querySelector(".city").innerHTML = data.name;
+  document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
+  document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+  document.querySelector(".wind").innerHTML = data.wind.speed + "km/h";
+   searchBox.value = "";
+}
+
+searchBox.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    checkweather(searchBox.value);
+  }
+});
+
+searchBtn.addEventListener("click", () => {
+  checkweather(searchBox.value);
+});
+
+// Uncomment the line below if you want to display weather information on page load
+// checkweather("Indore");
+
+       </script>
+
+</body>
+</html>
